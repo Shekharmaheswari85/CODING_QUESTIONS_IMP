@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int trap(vector<int>& a) {
+        int n=a.size();
+        int leftmax=0,rightmax=0,left=0,right=n-1,res=0;
+        while(left<=right){
+            if(a[left]<=a[right]){
+                if(a[left]>=leftmax){
+                    leftmax=a[left];
+                }
+                else{
+                    res+=leftmax-a[left];
+                }
+                left++;
+            }
+            else{
+                if(a[right]>=rightmax){
+                    rightmax=a[right];
+                }
+                else{
+                    res+=rightmax-a[right];
+                }
+                right--;
+            }
+        }
+        return res;
+    }
+};

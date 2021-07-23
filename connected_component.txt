@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+class Graph
+{
+	map<int,list<int>> l;
+public:
+	void addEdge(int x,int y){
+		l[x].pb(y);l[y].pb(x);
+	}
+	void dfs_helper(int src,map<int,bool> &visited){
+		visited[src]=1;
+		cout<<src<<" ";
+		for(auto i:l[src]){
+			if(!visited[i]){
+				dfs_helper(i,visited);
+			}
+		}
+	}
+	void connected_component(){
+		map<int,bool> visited;
+		int component=0;
+		for(auto i:l){
+			if(!visited[i.first]){
+				cout<<"Component "<<component<<"-->";
+				dfs_helper(i.first,visited);
+				component++;
+				cout<<endl;
+			}
+		}
+	}
+};
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    // cin >> t;
+    while (t--) {
+    	Graph g;
+    	g.addEdge(0,1);
+    	g.addEdge(1,2);
+    	g.addEdge(2,3);
+    	g.addEdge(0,3);
+    	g.addEdge(0,4);
+    	g.addEdge(5,6);
+    	g.addEdge(6,7);
+    	g.addEdge(8,8);
+    	g.connected_component();
+    }
+    return 0;
+}

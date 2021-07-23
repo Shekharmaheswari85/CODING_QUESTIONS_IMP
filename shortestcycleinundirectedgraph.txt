@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+const int N = 100;
+std::vector<int> g[N];
+void bfs(int src, int n, int &ans) {
+	vector<int> dis(n + 1, INT_MAX);
+	queue<int> q;
+	q.push(src);
+	dis[src] = 0;
+	// cout<<src<<" ";
+	while (!q.empty()) {
+		int node = q.front();
+		q.pop();
+		// cout<<node<<" ";
+		for (auto node_pair : g[node]) {
+			if (dis[node_pair] == INT_MAX) {
+				dis[node_pair]=dis[src]+1;
+				q.push(node_pair);
+			}
+			else if (dis[node_pair] >= dis[node]) {
+				ans = min(ans, dis[node_pair] + dis[node] + 1);
+			}
+		}
+	}
+}
+int main() {
+	IOS;
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	int t(1);
+	// cin >> t;
+	while (t--) {
+		int n, m;
+		cin >> n >> m;
+		int x, y;
+		int sim=0;
+		for (int i = 0; i < m; i++) {
+			cin >> x >> y;
+			g[x].pb(y);
+			g[y].pb(x);
+		}
+		int ans = n + 1;
+		for (int i = 1; i <= n; i++) {
+			// cout<<sim++<<"-> ";
+			bfs(i, n, ans);
+			// cout<<endl;
+		}
+		if (ans == n + 1) {
+			cout << "NO CYCLE" << endl;
+		}
+		else {
+			cout << "The shortest cycle in the graph is of length " << ans << endl;
+		}
+	}
+	return 0;
+}

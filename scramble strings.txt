@@ -1,0 +1,66 @@
+class Solution {
+public:
+    bool isanagram(string &s,string &p){
+        vector<int> map(26, 0);
+        for(int i=0;i<s.size();i++) map[s[i]-'a']++, map[p[i]-'a']--;
+        for(int &ele: map) if(ele!=0) return false;
+        return true;
+    }
+    unordered_map<string, unordered_map<string, int>> dp;
+    bool scramble(string s1,string s2){
+        if(!isanagram(s1,s2)) return 0;
+        else if(s1==s2) return 1;
+        else if(dp.count(s1) and dp[s1].count(s2)) return dp[s1][s2];
+        int ans=0;
+        for(int i=1;i<s1.size();i++){
+             if( scramble(s1.substr(0, i), s2.substr(0, i)) && scramble(s1.substr(i), s2.substr(i)) ){
+                ans = true;
+                break;
+            }
+            if( scramble(s1.substr(0, i), s2.substr(s2.size()-i)) && scramble(s1.substr(i), s2.substr(0, s2.size()-i)) ){
+                ans = true;
+                break;
+            }
+        }
+        return dp[s1][s2]=ans;
+        
+    }
+    bool isScramble(string s1, string s2) {
+        return scramble(s1,s2);
+    }
+};
+
+//Second Approach
+class Solution {
+public:
+    bool isanagram(string &s,string &p){
+        vector<int> map(26, 0);
+        for(int i=0;i<s.size();i++) map[s[i]-'a']++, map[p[i]-'a']--;
+        for(int &ele: map) if(ele!=0) return false;
+        return true;
+    }
+    unordered_map<string,bool> dp;
+    bool isScramble(string s1, string s2) {
+        if(s1.size()!=s2.size()){
+            return 0;
+        }
+        return helper(s1,s2,s1.size());
+    }
+    bool helper(string a,string b,int n){
+        if(!isanagram(a,b)) return 0;
+        if(a==b) return 1;
+        if(a=="" or b=="") return 0;
+        if(dp.find(a+' '+b)!=dp.end()){
+            return dp[a+' '+b];
+        }
+        for(int i=1;i<=n-1;i++){
+            if(helper(a.substr(0,i),b.substr(n-i),i) and helper(a.substr(i),b.substr(0,n-i),n-i)){
+                return dp[a+' '+b] = 1;
+            }
+            if(helper(a.substr(0,i),b.substr(0,i),i) and helper(a.substr(i),b.substr(i),n-i)){
+               return dp[a+' '+b] = 1;
+            }
+        }
+        return dp[a+' '+b]=0;
+    }
+};

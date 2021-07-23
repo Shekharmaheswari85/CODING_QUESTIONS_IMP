@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define V 9
+struct node {
+    int to, weight;
+};
+vector <node> edges[V];
+void zeroOneBFS(int src) {
+    int dist[V];
+    for (int i = 0; i < V; i++) {
+        dist[i] = INT_MAX;
+    }
+    dist[src] = 0;
+    deque<int> q;
+    q.push_back(src);
+    while (!q.empty()) {
+        int v = q.front();
+        q.pop_front();
+        for (auto nbr : edges[v]) {
+            if (dist[nbr.to] > dist[v] + nbr.weight) {
+                dist[nbr.to] = dist[v] + nbr.weight;
+                if (nbr.weight == 0) {
+                    q.push_front(nbr.to);
+                }
+                else {
+                    q.push_back(nbr.to);
+                }
+            }
+        }
+    }
+    for (int i = 0; i < V; i++)
+        cout << dist[i] << " ";
+}
+
+void addEdge(int u, int v, int wt) {
+    edges[u].push_back({v, wt});
+    edges[v].push_back({u, wt});
+}
+int main() {
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    addEdge(0, 1, 0);
+    addEdge(0, 7, 1);
+    addEdge(1, 7, 1);
+    addEdge(1, 2, 1);
+    addEdge(2, 3, 0);
+    addEdge(2, 5, 0);
+    addEdge(2, 8, 1);
+    addEdge(3, 4, 1);
+    addEdge(3, 5, 1);
+    addEdge(4, 5, 1);
+    addEdge(5, 6, 1);
+    addEdge(6, 7, 1);
+    addEdge(7, 8, 1);
+    int src = 0;
+    zeroOneBFS(src);
+    return 0;
+}

@@ -1,0 +1,25 @@
+void bfs(T src){
+        map<T,bool> dist;
+        queue<T> q;
+        q.push(src);
+        for(auto node_pair:l){
+            T node=node_pair.first;
+            dist[node]=INT_MAX;
+        }
+        dist[src]=0;
+        while(!q.empty()){
+            T p=q.front();
+            q.pop();
+            for(auto i: l[p]){
+                if(dist[i]==INT_MAX){
+                    q.push(i);
+                    dist[i]=dist[p]+1;
+                }
+            }
+        }
+        for(auto node_pair: l){
+            T node=node_pair.first;
+            int d=dist[node];
+            cout<<"Node "<<node<<" Dist from src "<<d<<endl;
+        }
+    }

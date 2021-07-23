@@ -1,0 +1,71 @@
+@csalgo
+
+Problem Name: RANDOM QUERY
+Problem Difficulty: 2
+Problem Constraints: 1 ≤ n ≤ 10^6
+
+Problem Description:
+You are given an array <B>a</B> consisting of <B>n</B> positive integers. You pick two integer numbers <B>l</B> and <B>r</B> from <B>1</B> to <B>n</B>, inclusive (numbers are picked randomly, equiprobably and independently). If <B>l</B> > <B>r</B>, then you swap values of <B>l</B> and <B>r</B>. You have to calculate the expected value of the number of unique elements in segment of the array from index <B>l</B> to index <B>r</B>, inclusive (1-indexed).
+
+Input Format: The first line contains one integer number The first line contains one integer number <B>n</B> . The second line contains <B>n</B> integer numbers <B>a<SUB>1</SUB>, a<SUB>2</SUB>, ... a<SUB>n</SUB></B> — elements of the array. <b>(1 ≤ a<SUB>i</SUB> ≤ 10<SUP>6</SUP>) </b>
+Sample Input: 2
+1 2
+Output Format: Print one number — the expected number of unique elements in chosen segment. <BR/>
+<B> NOTE: </B> Print your answer upto the precision of  6 decimal places.
+Sample Output: 1.500000
+
+
+
+=====Solution=====
+
+#include<bits/stdc++.h>
+#include<unordered_set>
+using namespace std;
+ #define fio ios_base::sync_with_stdio(false)
+ 
+#define ll long long int
+
+#define s(x) scanf("%lld",&x)
+#define s2(x,y) s(x)+s(y)
+#define s3(x,y,z) s(x)+s(y)+s(z)
+ 
+#define p(x) printf("%lld\n",x)
+#define p2(x,y) p(x)+p(y)
+#define p3(x,y,z) p(x)+p(y)+p(z)
+#define F(i,a,b) for(ll i = (ll)(a); i <= (ll)(b); i++)
+#define RF(i,a,b) for(ll i = (ll)(a); i >= (ll)(b); i--)
+ 
+#define ff first
+#define ss second
+#define mp(x,y) make_pair(x,y)
+#define pll pair<ll,ll>
+#define pb push_back
+
+ll inf = 1e18;
+ll mod = 1e9 + 7 ;
+ll gcd(ll a , ll b){return b==0?a:gcd(b,a%b);}
+
+int main()
+{
+	// freopen("input.txt","r",stdin);
+ 	// freopen("output.txt","w",stdout);
+	ll t=1;
+	//s(t);
+	while(t--){
+		ll n;
+		s(n);
+		vector<ll>ar(1000000+5,0);
+		F(i,1,n)cin>>ar[i];
+		ll ans=0ll;
+		vector<ll> occ(1000000+5,0);
+		F(i,1,n){
+			ans+=(i-occ[ar[i]])*(n-i+1)*2 - 1ll;
+			occ[ar[i]]=i;
+		}
+		double res = (double)(ans)/(double)(n*n);
+		printf("%.6lf\n",res);
+	}
+}
+
+
+@csalgo Telegram

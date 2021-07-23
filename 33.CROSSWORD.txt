@@ -1,0 +1,118 @@
+@csalgo
+
+Problem Name: CROSSWORD
+Problem Difficulty: 3
+Problem Constraints: 1 <= N <= 10
+1 <= M <= 5
+Problem Description:
+You are given a dictionary consisting of **N** words each containing **lowercase** letters 'a'-'z'.
+You also have **MxM** crossword consisting of lowercase letters 'a'-'z'.
+You want to print all possible words that can be formed by a sequence of adjacent characters. 
+Note that you can move to any of **8 adjacent** characters, but a word should **not** have multiple instances of same cell.
+**Note :- if a word is present in crossword more than once print it once.**
+
+
+Input Format: First line contains integer N.
+Then follow N space seperated words.
+Next line contains integer M.
+Then you have M characters each in next M lines forming MxM grid.
+Sample Input: 2
+a aa
+2
+aa
+aa
+Output Format: Print all words of dictionary present in crossword with space between words.
+Sample Output: a aa
+
+
+
+=====Solution=====
+/*input
+4
+gitohro qf ejvh i 
+3
+gor
+pih
+sto
+*/
+#include <bits/stdc++.h>
+#include<stdio.h>
+using namespace std;
+#define F(i,a,b) for(ll i = a; i <= b; i++)
+#define RF(i,a,b) for(ll i = a; i >= b; i--)
+#define pii pair<ll,ll>
+#define PI 3.14159265358979323846264338327950288
+#define ll long long
+#define ff first
+#define ss second
+#define pb(x) push_back(x)
+#define mp(x,y) make_pair(x,y)
+#define debug(x) cout << #x << " = " << x << endl
+#define INF 1000000009
+#define mod 1000000007
+#define S(x) scanf("%d",&x)
+#define S2(x,y) scanf("%d%d",&x,&y)
+#define P(x) printf("%d\n",x)
+#define all(v) v.begin(),v.end()
+ll n,m;
+map <string,ll> dict;
+map <string,ll> mark;
+char arr[15][15];
+bool vis[15][15];
+void f(ll i,ll j,string ans)
+{
+	if(i<=0 || j<=0 || i>m || j>m || vis[i][j])
+		return;
+	//cout<<i<<" "<<j<<" "<<ans<<endl;
+	vis[i][j] = 1;
+	ans += arr[i][j];
+	if(dict[ans]) // if found in dictionary
+	{
+		if(!mark[ans])
+		{
+			mark[ans] = 1;
+			cout<<ans<<" ";
+		}
+	}
+	F(row,i-1,i+1)
+	{
+		F(col,j-1,j+1)
+		{
+			f(row,col,ans);
+		}
+	}
+	ans.erase(ans.length()-1);
+	vis[i][j] = 0;
+}
+int main() 
+{
+	std::ios::sync_with_stdio(false);
+	//reopen("o3.txt","w",stdout);
+	cin>>n;
+	F(i,1,n)
+	{
+		string s;
+		cin>>s;
+		dict[s] = 1; // mark all the words in dictionary
+	}
+	cin>>m;
+	F(i,1,m)
+	{
+		F(j,1,m)
+		{
+			cin>>arr[i][j];
+		}
+	}
+	F(i,1,m)
+	{
+		F(j,1,m)
+		{
+			memset(vis,0,sizeof(vis));
+			string ans="";
+			f(i,j,ans); // try all words starting with this letter
+		}
+	}
+	return 0;
+}
+
+@csalgo Telegram

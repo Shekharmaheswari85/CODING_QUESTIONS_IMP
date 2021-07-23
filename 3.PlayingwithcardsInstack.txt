@@ -1,0 +1,86 @@
+Problem Name: Playing with cards (In stack)
+Problem Difficulty: None
+Problem Constraints: N < 10^5 <br>
+Q < 10^5 <br>
+|A<sub>i</sub>| < 10^9 
+Problem Description:
+You are at a casino. There are N stacked cards on pile . Each card has a number written on it. Then there will be Q iterations. In i<sup>th</sup> iteration, you start picking up the cards in A<sub>i-1</sub><sup>th</sup> pile from the top one by one and check whether the number written on the card is divisible by the i<sup>th</sup> prime number. If the number is divisible, you stack that card on pile B<sub>i</sub>. Otherwise, you stack that card on pile A<sub>i</sub>. After Q iterations, cards can only be on pile B<sub>1</sub>, B<sub>2</sub>, B<sub>3</sub>, . . . B<sub>Q</sub>, A<sub>Q</sub> . Output numbers on these cards from top to bottom of each piles in order of B<sub>1</sub>, B<sub>2</sub>, B<sub>3</sub>, . . . B<sub>Q</sub>, A<sub>Q</sub> .
+
+Input Format: First line contains N and Q.
+The next line contains N space separated integers representing the initial pile of cards i.e., A<sub>0</sub>. The leftmost value represents the bottom plate of the pile.
+Sample Input: 5 1
+3 4 7 6 5
+Output Format: Output N lines, each line containing the number written on the card.
+Sample Output: 4
+6
+3
+7
+5
+
+
+
+=====Solution=====
+#include <iostream>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+int main()
+{
+    int q, n, v;
+    vector<int> primes;
+    primes.push_back(2);
+    primes.push_back(3);
+    for(int i = 5; i <= 10000; i++) //Sieve
+    {
+        int no = 0;
+        for(int j = 2; j*j <= i; j++)
+        {
+            if(i%j == 0)
+                no = 1;
+        }
+        if(!no)
+            primes.push_back(i);
+    }
+    cin>>n>>q;
+    stack<int> stack1, stack2, stack3;
+    for(int i = 0 ; i < n; i++)
+    {
+        cin>>v;
+        stack1.push(v);
+    }
+    for(int i = 0 ; i < q; i++)
+    {
+        if(stack1.empty())
+            break;
+        int cur = primes[i];
+        while(!stack1.empty())
+        {
+            int ele = stack1.top();
+            stack1.pop();
+            if(ele%cur == 0)
+            {
+                stack2.push(ele);
+            }
+            else
+            {
+                stack3.push(ele);
+            }
+        }
+        while(!stack2.empty())
+        {
+            cout<<stack2.top()<<endl;
+            stack2.pop();
+        }
+        stack1 = stack3;
+        while(!stack3.empty())
+            stack3.pop();
+    }
+    while(!stack1.empty())
+    {
+        cout<<stack1.top()<<endl;
+        stack1.pop();
+    }
+    return 0;
+}

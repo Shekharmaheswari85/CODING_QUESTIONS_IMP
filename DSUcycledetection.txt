@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+class Graph{
+    int V;
+    list<pair<int,int>> l;
+public:
+    Graph(int V){
+        this->V=V;
+    }
+    void addEdge(int u,int v){
+        l.push_back(make_pair(u,v));
+        cout<<u<<" "<<v<<endl;
+    }
+    int findSet(int i,int parent[]){
+        if(parent[i]==-1){
+            return i;
+        }
+        return findSet(parent[i],parent);
+    }
+    void union_set(int x,int y,int parent[]){
+        int s1=findSet(x,parent);
+        int s2=findSet(y,parent);
+        if(s1!=s2){
+            parent[s1]=s2;
+        }
+    }
+    bool contains_cycle(){
+        int *parent = new int[V];
+        cout<<V<<endl;
+        memset(parent,-1,sizeof(parent));
+        for(auto edge:l){
+            int i=edge.first;
+            int j=edge.second;
+            // cout<<i<<" "<<j<<endl;
+            int s1=findSet(i,parent);
+            int s2=findSet(j,parent);
+            if(s1!=s2){
+                union_set(s1,s2,parent);
+            }
+            else{
+                cout<<"Same parents "<<s1<<" and "<<s2<<endl;
+                return 1;
+            }
+        }
+        delete [] parent;
+        return 0;
+    }
+};
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    // cin >> t;
+    while (t--) {
+        Graph g(4);
+        g.addEdge(1,2);
+        g.addEdge(2,3);
+        g.addEdge(3,4);
+        g.addEdge(4,1);
+        cout<<g.contains_cycle();
+    }
+    return 0;
+}

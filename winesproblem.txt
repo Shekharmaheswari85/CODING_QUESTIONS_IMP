@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+int dp[100][100];
+int whinesproblem(int i,int j,int y,int p[]){
+    if(i>j) { 
+        dp[i][j]=0;
+    }
+    else {
+        dp[i][j]=max(p[i]*y+whinesproblem(i+1,j,y+1,p),p[j]*y+whinesproblem(i,j-1,y+1,p));
+    }
+    return dp[i][j];
+}
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    //cin >> t;
+    while (t--) {
+        int w[]={2,3,5,1,4};
+        cout<<whinesproblem(0,5,0,w);
+    }
+    return 0;
+}

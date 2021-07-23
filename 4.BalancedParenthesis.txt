@@ -1,0 +1,52 @@
+Problem Name: Balanced Parenthesis
+Problem Difficulty: None
+Problem Constraints: 1<=|S|<=10^5
+Problem Description:
+You are given a string of brackets i.e. '{', '}' , '(' , ')', '[' , ']' . You have to check whether the sequence of parenthesis is balanced or not. <br>For example, "(())", "(())()" are balanced and "())(", "(()))" are not.
+
+Input Format: A string of '(' , ')' , '{' , '}' and '[' , ']' .
+Sample Input: (())
+Output Format: Print "Yes" if the brackets are balanced and "No" if not balanced.
+Sample Output: Yes
+
+
+
+
+=====Solution=====
+#include<bits/stdc++.h>
+using namespace std ;
+
+bool isBalanced (string str){
+	stack<char> st ;
+	for (int i=0;i<str.size();i++ ){
+		char ch= str[i];
+		if (ch=='('){
+			st.push(ch) ;
+		}
+		else {
+			if (ch==')'){
+				if(st.empty()){
+					return false ;
+				}
+          
+				st.pop() ;
+			}
+		}
+	}
+    return st.empty() ;
+}
+
+
+int main() {
+string str ;
+cin>>str;
+
+if(isBalanced(str)){
+    cout<<"Yes";
+}
+    else {
+        cout<<"No";
+    }
+
+	return 0;
+}

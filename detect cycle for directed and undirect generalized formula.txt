@@ -1,0 +1,20 @@
+//for directed and undirevted graph both this will work to detect back edge
+class cycle{
+    bool cyc=0;
+    int visited[100]={0};
+    void dfs(int src,int par){
+        // visited and in call stack
+        visited[src]=1;
+        for (auto x:l[src]){
+            if(visited[x]==0){
+                dfs(x,src);
+            }
+            else if(x!=par and visited[x]==1){
+                cout<<src<<" "<<x<<endl; // back edge
+                cyc=1;
+            }
+        }
+        // bahar nikalo call stack se
+        visited[src]=2;
+    }
+};

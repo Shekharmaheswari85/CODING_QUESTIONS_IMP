@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+int dp[100][100];
+int LCS(int a[],int b[],int n,int m){
+    if(n==0 or m==0){
+        return 0;
+    }
+    if(dp[n-1][m-1]!=-1){
+        return dp[n-1][m-1];
+    }
+    if(a[n-1]==b[m-1]){
+        return dp[n-1][m-1]= 1+LCS(a,b,n-1,m-1);
+    }
+    else{
+        return dp[n-1][m-1]=max(LCS(a,b,n-1,m),LCS(a,b,n,m-1));
+    }
+}
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    //cin >> t;
+    while (t--) {
+        int n;
+        cin>>n;
+        int a[n],b[n];
+        for(int i=0;i<n;i++){
+            cin>>a[i];
+            b[i]=a[i];
+        }
+        sort(b,b+n);
+        memset(dp,-1,sizeof(dp));
+        // cout<<LCS(a,b,n,n);
+        int L[n];
+        L[0]=1;
+        for(int i=1;i<n;i++){
+            L[i]=1;
+            for(int j=0;j<i;j++){
+                if(a[i]>a[j] and L[i]<L[j]+1){
+                    L[i]=L[j]+1;
+                }
+            }
+        }
+        cout<<*max_element(L,L+n);
+    }
+    return 0;
+}

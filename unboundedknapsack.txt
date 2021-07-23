@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+int dp[9][9];
+int unbounded(int length[], int price[], int N, int n) {
+    if (n == 0 or N == 0) {
+        return 0;
+    }
+    if (length[n - 1] <= N) {
+        dp[n - 1][N] = max(price[n - 1] + unbounded(length, price, N - length[n - 1], n), unbounded(length, price, N, n - 1));
+    }
+    else {
+        dp[n - 1][N] = unbounded(length, price, N, n - 1);
+    }
+    return dp[n - 1][N];
+}
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        int length[n], price[n], N;
+        for (int i = 0; i < n; i++) {
+            cin >> length[i];
+        }
+        for (int i = 0; i < n; i++) {
+            cin >> price[i];
+        }
+        cin >> N;
+        cout << unbounded(length, price, N, n) << endl;
+    }
+    return 0;
+}

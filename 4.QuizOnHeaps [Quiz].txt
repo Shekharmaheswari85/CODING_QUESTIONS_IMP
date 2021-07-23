@@ -1,0 +1,100 @@
+Quiz questions
+
+0. Title: Build Heap
+Description: The minimum number of interchanges needed to convert the array 89, 19, 40, 17, 12, 10, 2, 5, 7, 11, 6, 9, 70 into a heap with the maximum element at the root is
+
+0.0
+1.1
+2.2
+3.3
+
+
+
+1. Title: Merge Max-Heaps
+Description: In what best time complexity you can merge two max-heaps? (Assume size of first heap is (m+n) and the second is (n))
+
+0.O(1)
+1.O(m+n)
+2.O(logM*logN)
+3.O(mn)
+
+
+
+2. Title: Level Order In A Heap 
+Description: A priority queue is implemented as a Max-heap. Initially it has 5 elements. The level order traversal of the heap is 10, 8, 5, 3, 2. Two new elements ‘1’ and ‘7’ are inserted into the heap in that order. The level order traversal of the heap after the insertion of the elements is
+
+0.10, 8, 7, 5, 3, 2, 1
+1.10, 8, 7, 2, 3, 1, 5
+2.10, 8, 7, 1, 2, 3, 5
+3.10, 8, 7, 3, 2, 1, 5
+
+
+
+3. Title: Complexity Of Heap Operation
+Description: Which of the following Binary Min Heap operation has the highest time complexity?
+
+0.Inserting an item under the assumption that the heap has capacity to accommodate one more item
+1.Deleting an item from heap
+2.Merging with another heap under the assumption that the heap has capacity to accommodate items of other heap
+3.Decreasing value of a key
+
+
+
+4. Title: Deletion From Heap
+Description: For deleting any arbitrary element from a min heap in what best complexity you can achieve this?
+
+0.O(1)
+1.O(logN)
+2.O(N)
+
+
+
+5. Title: Check If The Array Forms Heap
+Description: Which of the following sequences of array elements forms a heap?
+
+0.23, 17, 14, 6, 13, 10, 1, 12, 7, 5
+1.23, 17, 14, 6, 13, 10, 1, 5, 7, 12
+2.23, 17, 14, 7, 13, 10, 1, 5, 6, 12
+3.23, 17, 14, 7, 13, 10, 1, 12, 5, 7
+
+
+
+6. Title: Build Heap 2
+Description: We have a binary heap on n elements and wish to insert n more elements (not necessarily one after another) into this heap. The total time required for this is
+
+0.O(logN)
+1.O(N)
+2.O(NlogN)
+3.O(N^2)
+
+
+
+7. Title: Location Of Parent In Heap
+Description: What is the location of parent node for any arbitary node i?
+
+0.(i/2) position
+1.(i+1)/ position
+2.floor(i/2) position
+3.ceil(i/2) position
+
+
+
+8. Title: Binary Min-Heap
+Description: A complete binary min-heap is made by including all the integers from 1 to 1023 exactly once. The depth of the node in the heap is the length of the path from the root of the heap to that node. Thus the root is at depth 0. The maximum depth at which integer 9 can appear is 
+
+0.3
+1.7
+2.8
+3.9
+
+
+
+9. Title: Decrease Value In A Heap
+Description: Time taken in decreasing the node value in a binomial heap is
+
+0.O(1)
+1.O(logN)
+2.O(N)
+
+
+

@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int dp[101][10001];
+    int superEggDrop(int k, int n) {
+        memset(dp,-1,sizeof(dp));
+        return solve(k,n);
+    }
+    int solve(int e,int k){
+	   if(k==0||k==1)
+	       return k;
+	   if(e==1)
+	       return k;
+	   if(dp[e][k]!=-1)
+	    return dp[e][k];
+	   int mini = INT_MAX;
+	   int res;
+	   int l=0,h=k;
+       while(l<=h){
+           int m = (l+h)/2;
+           int left = solve(e-1,m-1);
+           int right = solve(e,k-m);
+           res = 1+max(left,right);
+           if(left < right) 
+                l = m+1;
+           else 
+                h = m-1;
+           mini=min(res,mini);
+       }
+	   return dp[e][k]=mini;
+	}
+};

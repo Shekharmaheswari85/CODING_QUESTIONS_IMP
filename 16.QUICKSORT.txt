@@ -1,0 +1,64 @@
+Problem Name: QUICKSORT
+Problem Difficulty: None
+Problem Constraints: 1<=N<=2*10^5 <br>
+|Ai|<=10^9
+Problem Description:
+Given an array *A*, of *N* elements. Sort the array using quicksort algorithm.(**Note :** Use randomized quicksort, otherwise worst case will not pass).
+
+Input Format: A single integer, *N*, denoting the number of elements in array. Next line contains *N* integers, denoting the elements of array.
+Sample Input: 5
+3 6 4 1 2
+
+Output Format: Print in a single line, *N* spaced integers, denoting the elements of array *A* in sorted order.
+Sample Output: 1 2 3 4 6 
+
+
+
+
+=====Solution=====
+//Rajkishor Ranjan
+//Code Functionality
+#include <iostream>
+#include <stdlib.h>
+#include<time.h>
+using namespace std;
+long long int partion(long long int a[],long long int be,long long int end)
+{
+	srand(time(NULL));
+	int pivotIndex = be + rand() % (end - be+1);
+	int pivot;
+	pivot = a[pivotIndex];
+	swap(a[pivotIndex], a[end]);
+	pivotIndex = end;
+	int k = be - 1;
+	for (int i = be; i <end; i++)
+	{
+		if (a[i] <= pivot)
+		{
+			k++;
+			swap(a[i], a[k]);
+		}
+	}
+	swap(a[k + 1], a[pivotIndex]);
+	return (k + 1);
+}
+
+void quicksort(long long int a[],long long  int be,long long  int end)
+{
+	if (be < end)
+	{
+
+
+		long long int p = partion(a, be, end);
+		quicksort(a, be, p-1);
+		quicksort(a, p + 1, end);
+	}
+}
+int main()
+{
+long long int n, a[1000000];
+	cin >> n;
+	for (int i = 0; i<n; i++) cin >> a[i];
+	quicksort(a, 0, n - 1);
+	for (int i = 0; i<n; i++) cout << a[i] << " ";
+}

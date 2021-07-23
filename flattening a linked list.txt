@@ -1,0 +1,36 @@
+
+/*  Function which returns the  root of 
+    the flattened linked list. */
+Node* mergeTwoLists(Node* l1,Node* l2){
+    Node* tmp = new Node(0);
+    Node* res=tmp;
+    while(l1!=NULL and l2!=NULL){
+        if(l1->data<l2->data){
+            tmp->bottom=l1;
+            tmp=tmp->bottom;
+            l1=l1->bottom;
+        }
+        else{
+            tmp->bottom=l2;
+            tmp=tmp->bottom;
+            l2=l2->bottom;
+        }
+    }
+    if(l1){
+        tmp->bottom=l1;
+    }
+    else{
+        tmp->bottom=l2;
+    }
+    return res->bottom;
+}
+Node *flatten(Node *root)
+{
+   if(root==NULL or root->next==NULL){
+       return root;
+   }
+   root->next=flatten(root->next);
+   root=mergeTwoLists(root,root->next);
+   return root;
+}
+

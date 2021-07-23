@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+// #include<ext/pb_ds/assoc_container.hpp>
+// #include<ext/pb_ds/tree_policy.hpp>
+// #define int long long int
+#define endl "\n"
+#define pb push_back
+int sum = 0;
+#define arrinp(v) for(auto &i:v) cin>>i,sum+=i;
+#define arrout(v) for(auto &i:v) cout<<i<<" ";
+#define newline cout<<endl;
+#define all(s) (s).begin(),(s).end()
+#define dbg(a) cout<<a<<endl;
+#define dbg2(a,b) cout<<a<<" "<<b<<endl;
+using namespace std;
+// using namespace __gnu_pbds;
+// typedef tree<int,null_type,less<int>, rb_tree_tag,
+//             tree_order_statistics_node_update> new_data_set;
+//             // order_of_key(int)  k-th largest element
+//             // find_by_order(int) gives us according to the order
+//             // insert() to insert in the PBDS
+//             // new_data_set ST; calling
+int dp[100][100];
+int LCSubstring(string s1, string s2, int n, int m) {
+	for (int i = 0; i < n + 1; i++) {
+		for (int j = 0; j < m + 1; j++) {
+			if (i == 0 or j == 0) {
+				dp[i][j] = 0;
+			}
+		}
+	}
+	for(int i=1;i<n+1;i++){
+		for(int j=1;j<m+1;j++){
+			if(s1[i-1]==s2[j-1]){
+				dp[i][j]=dp[i-1][j-1]+1;
+			}
+			else{
+				dp[i][j]=0;
+			}
+		}
+	}
+	return dp[n][m];
+}
+signed main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	int t(1);
+	// cin >> t;
+	while (t--) {
+		sum = 0;
+		string s1, s2;
+		cin >> s1 >> s2;
+		int n = s1.size(), m = s2.size();
+		cout << LCSubstring(s1, s2, n, m) << endl;
+	}
+	return 0;
+}

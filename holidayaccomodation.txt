@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+class Graph
+{
+    int V;
+    list<pair<int, int>> *l;
+public:
+    Graph(int V) {
+        this->V = V;
+        l = new list<pair<int, int>> [V];
+    }
+    void addEdge(int x, int y, int wt) {
+        l[x].pb({y, wt});
+        l[y].pb({x, wt});
+    }
+    int dfs_helper(int src, bool *visited, int *count, int &answer) {
+        visited[src] = 0;
+        count[src] = 1;
+        for (auto nbr_pair : l[src]) {
+            int nbr = nbr_pair.first;
+            int weight = nbr_pair.second;
+            if (!visited[nbr]) {
+                count[src] += dfs_helper(nbr, visited, count, answer);
+                int nx = count[nbr];
+                int ny = V - nx;
+                answer += 2 * min(nx, ny) * weight;
+            }
+        }
+        return count[src];
+    }
+    int dfs() {
+        bool *visited = new bool[V];
+        int *count = new int[V];
+        for (int i = 0; i < V; i++) {
+            visited[i] = false; // mark all node unvisited
+            count[i] = 0;
+        }
+        int answer = 0;
+        dfs_helper(1, visited, count, answer);
+        // cout<<answer<<endl;
+        return answer;
+    }
+
+};
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    cin >> t;
+    int count = 0;
+    while (t--) {
+        // cout<<1<<endl;
+
+        // g.addEdge(1,2,3);
+        // g.addEdge(2,3,2);
+        // g.addEdge(4,3,2);
+        // cout<<g.dfs()<<endl;
+        int V;
+        cin >> V;
+        int x, y, wt;
+        Graph g(V);
+        for (int i = 0; i < V - 1; i++) {
+            cin >> x >> y >> wt;
+            g.addEdge(x, y, wt);
+        }
+        cout << "Case #" << count++ << ": " << g.dfs() << endl;
+    }
+    return 0;
+}

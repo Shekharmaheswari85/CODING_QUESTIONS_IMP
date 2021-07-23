@@ -1,0 +1,51 @@
+@csalgo
+
+Problem Name: N-Queen Hard
+Problem Difficulty: None
+Problem Constraints: 1 ≤ N < 15
+
+Problem Description:
+You are given an empty chess board of size N*N. Find the number of ways to place N queens on the board, such that no two queens can kill each other in one move. A queen can move vertically, horizontally and diagonally.
+
+Input Format: A single integer N, denoting the size of chess board.
+Sample Input: 4
+Output Format: A single integer denoting the count of solutions.
+Sample Output: 2
+
+
+
+=====Solution=====
+#include<iostream>
+#include<ctime>
+#define DONE (1<<n)-1
+using namespace std;
+
+int ans =0;
+
+void solve(int row,int ld,int rd,int n){
+    if(row==DONE){ ans++;return;}
+
+    int pos = DONE &(~(row|ld|rd));
+    while(pos>0){
+        int p = pos&(-pos);
+        pos -= p;
+        solve(row|p, (ld|p)<<1,(rd|p)>>1,n);
+    }
+}
+
+int main(){
+    int n;
+    cin>>n;
+
+    clock_t st = clock();
+
+    solve(0,0,0,n);
+    cout<<ans<<endl;
+    
+
+   // cout<<ans<<endl;
+
+return 0;
+}
+
+@csalgo Telegram

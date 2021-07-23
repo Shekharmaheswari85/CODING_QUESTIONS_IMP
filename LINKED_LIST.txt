@@ -1,0 +1,266 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+class node{
+public:
+    int data;
+    node *next;
+    node(int d){
+        data=d;
+        next=NULL;
+    }
+};
+// passing a pointer by reference
+void insertathead(node* &head,int data){
+    if(head==NULL){
+        head=new node(data);
+        return;
+    } 
+    node *n=new node(data);
+    n->next=head;
+    head=n;
+}
+int length(node* head){
+    int count=0;
+    while(head!=NULL){
+        head=head->next;count++;
+    }
+    return count;
+}
+void insertattail(node* &head,int data){
+    if(head==NULL){
+        head=new node(data);
+        return;
+    }
+    node* tail=head;
+    while(tail->next!=NULL){
+        tail=tail->next;
+    }
+    tail->next=new node(data); 
+    return;
+}
+void insertatmiddle(node* &head,int data,int pos){
+    if(head==NULL or pos==0){
+        insertathead(head,data);
+        return;
+    }
+    else if(pos>length(head)){
+        insertattail(head,data);
+    }
+    else{
+        int jump=1;
+        node *n=head;
+        while(jump<pos-1){
+            n=n->next;
+        }
+        node* temp=new node(data);
+        temp->next=n->next;
+        n->next=temp;
+    }
+}
+void print(node* head){
+    while(head!=NULL){
+        cout<<head->data<<" ";
+        head=head->next;
+    }
+    cout<<endl;
+}
+void deletehead(node* &head){
+    if(head==NULL){
+        return;
+    }
+    else{
+        node *n=head->next;
+        free(head);
+        head=n;
+    }
+}
+void deletetail(node* &head){
+    node* temp=head;
+    if(temp==NULL){
+        return;
+    }
+    if(temp->next==NULL){
+        temp=NULL;
+        delete(temp);
+        return;
+    }
+    else{
+        while(temp->next->next!=NULL){
+            temp=temp->next;
+        }
+        node* temp1=temp->next;
+        temp->next=NULL;
+        delete(temp1);
+        return;
+    }
+}
+void deleteatmiddle(node* &head,int pos){
+    node* temp=head;
+    if(head==NULL){
+        return;
+    }
+    if(temp->next==NULL){
+        head=NULL;
+        free(temp);
+        return;
+    }
+    int count=1;
+    while(count<pos-1){
+        count++;
+        temp=temp->next;
+    }
+    node *temp1=temp->next;
+    temp->next=temp1->next;
+    free(temp1);
+    return;
+}
+bool search(node* head,int key){
+    if(head==NULL){
+        return 0;
+    }
+    else if(head->data==key){
+        return 1;
+    }
+    else{
+        return search(head->next,key);
+    }
+}
+ostream& operator<<(ostream &os,node* head){
+    print(head);
+    return os;
+}
+void reversestack(node* &head){
+    stack<node*> s;
+    node *temp=head;
+    while(temp->next!=NULL){
+        s.push(temp);
+        temp=temp->next;
+    }
+    head=temp;
+    while(!s.empty()){
+        temp->next=s.top();
+        s.pop();
+        temp=temp->next;
+    }
+    temp->next=NULL;
+}
+void reverse(node* &head){
+    node* current=head;
+    node* next=NULL;
+    node* prev=NULL;
+    while(current!=NULL){
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+    }
+    head=prev;
+}
+node* midpoint(node* head){
+    if(head==NULL and head->next==NULL){
+        return head;
+    }
+    node* slow=head;
+    node* fast=head->next;
+    while(fast!=NULL and fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    return slow;
+}
+void removekth(node* &head,int pos){
+    int len=length(head);
+    deleteatmiddle(head,len-pos+1);
+    return;
+}
+node* merge(node* a,node* b){
+    if(a==NULL) return b;
+    if(b==NULL) return a;
+    node* c;
+    if(a->data<b->data){
+        c=a;
+        c->next=merge(a->next,b);
+    }
+    else{
+        c=b;
+        c->next=merge(a,b->next);
+    }
+    return c;
+}
+node* mergesort(node* &head){
+    if(head==NULL or head->next==NULL){
+        return head;
+    }
+    node* mid=midpoint(head);
+    node* a=head;
+    node* b=mid->next;
+    mid->next=NULL;
+    a=mergesort(a);
+    b=mergesort(b);
+    node* c=merge(a,b);
+    // head=c;
+    return c;
+}
+bool detectcycle(node* head){
+    node* slow=head;
+    node* fast=head;
+    while(fast!=NULL and fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+        if(slow==fast){
+            return 1;
+        }
+    }
+    return 0;
+}
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    // cin >> t;
+    while (t--) {
+        node *head=NULL;
+        insertathead(head,9);
+        insertathead(head,2);
+        insertathead(head,5);
+        insertathead(head,0);
+        // //insertatmiddle(head,66,2);
+        // insertattail(head,70);
+        // cout<<head;
+        // deletehead(head);
+        // cout<<head;
+        // deletetail(head);
+        // cout<<head;
+        // deleteatmiddle(head,2);
+        // cout<<head;
+        // cout<<search(head,1)<<endl;;
+        // reversestack(head);
+        // cout<<head;
+        // reverse(head);
+        // cout<<head;
+        // insertattail(head,46);
+        // cout<<midpoint(head)<<endl;
+        // cout<<head;
+        // removekth(head,1);
+        cout<<head;
+
+        head=mergesort(head);
+        // cout<<head;
+        node *head1=NULL;
+        insertathead(head1,7);
+        insertathead(head1,5);
+        insertathead(head1,3);
+        insertathead(head1,1);
+        cout<<head<<head1;
+        node* mid=merge(head,head1);
+        cout<<mid;
+    }
+    return 0;
+}

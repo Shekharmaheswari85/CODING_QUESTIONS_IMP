@@ -1,0 +1,103 @@
+@csalgo
+
+Problem Name: Alice and Totient
+Problem Difficulty: 
+Problem Constraints: 1<=t<=50000
+1<=n<=10^6
+Problem Description:
+Alice is given the task of finding totient φ of a positive integer n (the number of positive integers less than or equal to n that are co-prime to n). As Alice is going on a date, he asks you to write a program for this.
+
+
+
+Input Format: First line of input of consists of an integer 't' denoting the number of test cases. Then 't' lines follow each containing integer values 'n' to calculate totient.
+Sample Input: 2
+2
+3
+Output Format: Print 't' lines 
+Sample Output: 1
+2
+
+
+
+=====Solution=====
+/*input
+5
+1
+2
+3
+4
+5
+*/
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define boost  ios_base::sync_with_stdio(false);
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define ppb pop_back
+#define fi first
+#define se second
+#define ll long long
+#define ull unsigned long long
+#define pii pair<ll, ll>
+#define f(i,a,b) for(ll i = (ll)(a); i <= (ll)(b); i++)
+#define rf(i,a,b) for(ll i = (ll)(a); i >= (ll)(b); i--)
+#define ms(a,b) memset((a),(b),sizeof(a))
+#define max(a,b) ((a>b)?(a):(b))
+#define min(a,b) ((a<b)?(a):(b))
+ 
+#define abs(x) ((x<0)?(-(x)):(x))
+#define MAX 100005
+#define inf LLONG_MAX
+#define MIN INT_MIN
+ 
+//typedef
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+ 
+int mod = 1e9 + 7 ;
+ll gcd(ll a , ll b){return b==0?a:gcd(b,a%b);}
+ll powmod(ll a,ll b) {ll res=1;if(a>=mod)a%=mod;for(;b;b>>=1){if(b&1)res=res*a;if(res>=mod)res%=mod;a=a*a;if(a>=mod)a%=mod;}return res;}
+ 
+/*..................................................................................................................................*/
+
+int phi[10*MAX];
+ll sum[10*MAX];
+//standard totient sieve
+void cal_totient()
+{
+    f(i,1,1000006)
+      phi[i]=i;
+      f(i,2,1000006)
+      {
+        if(phi[i]==i)
+        {
+          phi[i]=i-1;
+          for(int j=2*i;j<=1000006;j+=i)
+            phi[j]=(phi[j]/i)*(i-1);
+        }
+      }
+}
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+    int t;cin>>t;
+    int n;
+    cal_totient();
+    while(t--)
+    {
+      cin>>n;
+      cout<<phi[n]<<endl;
+    }
+    return 0;
+}
+
+
+
+ 
+
+
+@csalgo Telegram

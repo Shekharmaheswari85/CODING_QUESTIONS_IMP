@@ -1,0 +1,79 @@
+Problem Name: Dequeue efficient queue using stack
+Problem Difficulty: None
+Problem Constraints: 
+Problem Description:
+Implement a Queue using two stacks
+Make it Dequeue efficient.
+
+
+Input Format: Enter the size of the queue N add 0 - N-1 numbers in the queue
+Sample Input: 5
+Output Format: Display the numbers in the order they are dequeued and in a space separated manner
+Sample Output: 0 1 2 3 4
+
+
+
+=====Solution=====
+//Rajkishor Ranjan
+// Dequeue efficient Queue using Stack.
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+class Queue
+{
+	stack<int> main , helper;
+
+	public:
+
+	void push( int elem )
+	{
+		if( main.empty())
+		{
+			main.push(elem);
+		}
+		else
+		{
+			while( !main.empty() )
+			{
+				helper.push( main.top() );
+				main.pop();
+			}
+
+			main.push(elem);
+
+			while( !helper.empty() )
+			{
+				main.push( helper.top() );
+				helper.pop();
+			}
+		}
+	}
+
+	int pop()
+	{
+		int temp = main.top();
+		main.pop();
+		return temp;
+	}
+};
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	Queue q;
+
+	for( int i =  0 ; i < n  ; i++ )
+	{
+		q.push(i);
+	}
+
+	for( int i =  0 ; i < n ; i++ )
+	{
+		cout << q.pop() << " ";
+	}
+	return 0;
+}

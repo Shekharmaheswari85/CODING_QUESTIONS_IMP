@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+// #include<ext/pb_ds/assoc_container.hpp>
+// #include<ext/pb_ds/tree_policy.hpp>
+// #define int long long int
+#define endl "\n"
+#define pb push_back
+int sum = 0;
+#define arrinp(v) for(auto &i:v) cin>>i,sum+=i;
+#define arrout(v) for(auto &i:v) cout<<i<<" ";
+#define newline cout<<endl;
+#define all(s) (s).begin(),(s).end()
+#define dbg(a) cout<<a<<endl;
+#define dbg2(a,b) cout<<a<<" "<<b<<endl;
+using namespace std;
+// using namespace __gnu_pbds;
+// typedef tree<int,null_type,less<int>, rb_tree_tag,
+//             tree_order_statistics_node_update> new_data_set;
+//             // order_of_key(int)  k-th largest element
+//             // find_by_order(int) gives us according to the order
+//             // insert() to insert in the PBDS
+//             // new_data_set ST; calling
+int dp[100][100];
+int LCS(string s1, string s2, int n, int m) {
+	if (n == 0 or m == 0) {
+		return 0;
+	}
+	if (dp[n - 1][m - 1] != -1) {
+		return dp[n - 1][m - 1];
+	}
+	if (s1[n - 1] == s2[m - 1]) {
+		return dp[n - 1][m - 1] = 1 + LCS(s1, s2, n - 1, m - 1);
+	}
+	else {
+		return dp[n - 1][m - 1] = max(LCS(s1, s2, n - 1, m), LCS(s1, s2, n, m - 1));
+	}
+}
+signed main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	int t(1);
+	// cin >> t;
+	while (t--) {
+		sum = 0;
+		string s1, s2;
+		cin >> s1 >> s2;
+		int n = s1.size(), m = s2.size();
+		int dp[n + 1][m + 1];
+		memset(dp, -1, sizeof(dp));
+		cout << LCS(s1, s2, n, m) << endl;
+	}
+	return 0;
+}

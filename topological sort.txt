@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+map<int,list<int>> g;
+void dfs_helper(int src,vector<int> &visited,list<int> &ordering){
+	visited[src]=1;
+	for(auto node:g[src]){
+		if(!visited[node]){
+			dfs_helper(node,visited,ordering);
+		}
+	}
+	ordering.push_front(src);
+	return;
+}
+void dfs(int V){
+	std::vector<int> visited(V,0);
+	list<int> ordering;
+	for(auto p:g){
+		int node = p.first;
+		if(!visited[node]){
+			dfs_helper(node,visited,ordering);
+		}
+	}
+	for(auto i:ordering){
+		cout<<i<<" ";
+	}
+	cout<<endl;
+}
+int main() {
+    IOS;
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t(1);
+    // cin >> t;
+    while (t--) {
+    	int V,E;
+    	cin>>V>>E;
+    	int x,y;
+    	// directed graph
+    	for(int i=0;i<E;i++){
+    		cin>>x>>y;
+    		g[x].pb(y);
+
+    	}
+    	dfs(V);
+    }
+    return 0;
+}
+// input
+6 5
+1 2
+1 3
+3 4
+3 5
+1 6

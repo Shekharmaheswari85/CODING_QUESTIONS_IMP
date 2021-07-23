@@ -1,0 +1,20 @@
+    void top(Node* root,int dist,int level,auto& map){
+        if (root == nullptr) {
+            return;
+        }
+        if (map.find(dist) == map.end() || level < map[dist].second){
+            map[dist] = { root->data, level };
+        }
+        top(root->left, dist - 1, level + 1, map);
+        top(root->right, dist + 1, level + 1, map);
+    }
+    vector<int> topView(Node *root){
+        vector<int> v;
+        map<int,pair<int,int>> m;
+        top(root,0,0,m);
+        for(auto p:m){
+            // cout<<p.second.first;
+            v.push_back(p.second.first);
+        }
+        return v;
+    }

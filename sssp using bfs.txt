@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+#define ll long long int
+#define endl "\n"
+#define pb push_back
+#define IOS ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+using namespace std;
+
+template<typename T>
+class Graph
+{
+	map<T, list<T>> l;
+public:
+	void addEdge(int x, int y) {
+		l[x].pb(y);
+		l[y].pb(x);
+	}
+	void bfs(T src) {
+		//sssp single source shortest path
+		queue<T> q;
+		map<T, int> dist;
+		// all the other distance be int_max
+		for (auto node_pair : l) {
+			T node = node_pair.first;
+			dist[node] = INT_MAX;
+		}
+		q.push(src);
+		// source distance b zero from itself
+		dist[src] = 0;
+		while (!q.empty()) {
+			T node = q.front();
+			q.pop();
+			// cout<<node<<" ";
+			for (auto nbr : l[node]) {
+				if (dist[nbr] == INT_MAX) {
+					q.push(nbr);
+					dist[nbr] = dist[node] + 1;
+				}
+			}
+		}
+		for (auto node_pair : l) {
+			T node = node_pair.first;
+			int d = dist[node];
+			cout << "Node " << node << " Dist from src " << d << endl;
+		}
+	}
+
+};
+int main() {
+	IOS;
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	int t(1);
+	// cin >> t;
+	while (t--) {
+		Graph<int> g;
+		g.addEdge(0, 1);
+		g.addEdge(1, 2);
+		g.addEdge(2, 3);
+		g.addEdge(3, 4);
+		g.addEdge(4, 5);
+		g.bfs(0);
+	}
+	return 0;
+}

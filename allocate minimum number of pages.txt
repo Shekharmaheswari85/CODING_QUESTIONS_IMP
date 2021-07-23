@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int ispossible(vector<int> a,int n,int mid){
+        int count=1,sum=0;
+        for(int i=0;i<a.size();i++){
+            sum+=a[i];
+            if(sum>mid){
+                count++;
+                sum=a[i];
+            }
+        }
+        return count<=n;
+    }
+    int splitArray(vector<int>& arr, int m) {
+        int maxa =0;
+        int sum =0;
+        for(int val: arr){
+            sum += val;
+            maxa = max(val, maxa);
+        }
+        if(m==arr.size()){
+            return maxa;
+        }
+        int lo =maxa;
+        int hi = sum;
+        int ans =0;
+        while(lo<=hi){
+            int mid = lo + (hi-lo)/2; //ceil value
+            if(ispossible(arr,m, mid)==true){
+                ans = mid;
+                hi = mid-1;
+            }
+            else{
+                lo = mid+1;
+            }
+    }
+    
+    return ans;
+    }
+};

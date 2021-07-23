@@ -1,0 +1,19 @@
+int dp[15][100];
+
+int tsp(vector<vector<int>> dist,int setofcities,int city,int n){
+    if(setofcities==(1<<n)-1){
+        return dist[city][0];
+    }
+    if(dp[setofcities][city]!=-1){
+        return dp[setofcities][city];
+    }
+    int ans=INT_MAX;
+    for(int choice=0;choice<n;choice++){
+        if((setofcities & (1<<choice))==0){
+            int subpro=dist[city][choice]+tsp(dist,setofcities|(1<<choice),choice,n);
+            ans=min(ans,subpro);
+        }
+    }
+    dp[setofcities][city]=ans;
+    return ans;
+}
