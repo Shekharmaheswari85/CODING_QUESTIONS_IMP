@@ -1,4 +1,4 @@
-@csalgo
+ @csalgo
 
 Problem Name: RANDOM QUERY
 Problem Difficulty: 2
